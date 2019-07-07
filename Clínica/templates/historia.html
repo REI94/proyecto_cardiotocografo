@@ -1,0 +1,8 @@
+{% extends 'base.html'%}
+{%block titulo%}Detalles de historia {{historia.codigo}}{%endblock%}
+
+{%block contenido%}
+<h1>Número de historia: {{historia.codigo}}</h1>
+<h2>Enfermedad padecida: {{historia.enfermedad_padecida}}</h2>
+<h3>Enfermedades hereditarias: {{historia.enfermedad_hereditarias}}</h3>
+{%endblock%}

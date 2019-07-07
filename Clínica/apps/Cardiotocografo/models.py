@@ -18,7 +18,8 @@ class Historia(models.Model):
 
     #-----Métodos-----
     def get_absolute_url(self):
-        return reverse('model-detail-view', args=[str(self.codigo)])
+        return reverse('detalles-de-historia', args=[str(self.codigo)])
 
     def __str__(self):
-        return self.codigo
+        cadena = "Historia Nro.: "+str(self.codigo)+" - "+self.enfermedad_padecida
+        return cadena

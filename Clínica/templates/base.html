@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">  
+  <head>    
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+    <title>{% block titulo %}Título base{% endblock %}</title>
+    {% endblock %}
+  </head>  
+  <body>
+    {%block body%}   
+      {%block header%}
+      {%endblock%}
+      
+      {%block contenido%}    
+      {%endblock%}
+
+      {%block js%}
+      {%endblock%}
+    {%endblock%}
+  </body>
+</html>
