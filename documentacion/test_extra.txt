@@ -1,0 +1,60 @@
+Puesto que el modelo se trata de la Historia médica de cada paciente, es indispensable validar también las vistas. Una vista que haga referencia al paciente equivocado puede resultar en un terrible desenlace.
+
+Para validar el comportamiento de las vistas usamos el cliente de pruebas de Django para simular las solicitudes GET y POST en un navegador y observar el comportamiento.
+
+Como un ejemplo del código para el modelo Historia tenemos:
+
+
+--------------------views.py------------------------
+
+from .models import Historia
+from django.views import generic
+
+class HistoriaListView(generic.ListView):
+	model = Historia
+	paginate_by = 10
+----------------------------------------------------
+
+------------------test_views.py---------------------
+
+from django.test import TestCase
+from catalog.models import Historia
+from django.urls import reverse
+
+class HistoriaListViewTest (TestCase):
+
+
+	def setUpTestData(cls):		
+		numero_alergias = 10
+		for alergia_num in range(numero_alergias):
+		Historia.objects.create(enfermedad_padecida = 'Fiebre%s'%numero_alergias)
+
+	def test_view_url_existe_en_ubicacion_indicada(self):
+		resp = self.client.get('/historia/verHistoria/')
+		self.assertEqual(resp.status_code, 200)
+
+	def test_view_url_accesible_por_nombre(self):
+		resp = self.client.get(reverse('alergias'))
+		self.assertEqual(resp.status_code, 200)
+
+	def test_view_usa_plantilla_correcta( self ):
+		resp = self.client.get(reverse('alergias'))
+		self.assertEqual(resp.status_code, 200)
+		self.assertTemplateUsed(resp, 'historias/lista_de_alergias.html')
+
+	def test_numero_de_paginas_correcto(self):
+		resp = self.client.get(reverse('alergia_num'))
+		self.assertEqual(resp.status_code, 200)
+		self.assertTrue('is_paginated' in resp.context)
+		self.assertTrue(resp.context['is_paginated'] == True )
+		self.assertTrue(len(resp.context['alergias']) == 10)
+		#10 porque se le asignaron a paginate_by en views.py
+
+	def test_lista_todas_las_alergias(self):
+		#Va a la novena pagina y confirma que hay 10
+		resp = self.client.get(reverse('alergias_num')+'?page=9')
+		self.assertEqual(resp.status_code, 200).assertTrue('is_paginated' in resp.context)
+		self.assertTrue(resp.context['is_paginated'] == True)
+		self.assertTrue(len(resp.context['alergias']) == 10)
+
+----------------------------------------------------------
