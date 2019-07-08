@@ -1,11 +1,25 @@
 {% extends 'base.html'%}
+{% load staticfiles %}
 
 {%block titulo%}Crear historia{%endblock%}
     
-    {%block contenido%} 
-    <form method="POST">
-      {% csrf_token %}
-      {{ form }}
-      <button type="submit">Guardar</button>
-    </form>    
+    {%block contenido%}     
+        <div class="container col-md-4 formularios">
+          <form method ="POST">
+                {% csrf_token %}
+            <div class="form-group" style="margin-top: 20px">
+              <label for="exampleInputEnfermedades">Enfermedad padecida:</label>
+              <input type="text" class="form-control" id="exampleInputEnfermedades" aria-describedby="" placeholder="" name="enfermedad_padecida">            
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEnfHereditarias">Enfermedades hereditarias</label>               
+              <textarea class="form-control" id="exampleInputEnfHereditarias" rows="3" name="enfermedad_hereditarias"></textarea>
+            </div>                     
+            <div class="container" style="padding-bottom: 10px">
+              <div class="row justify-content-center">            
+                <button type="submit" class="btn btn-outline-success">Guardar</button>                        
+              </div>                            
+            </div>
+          </form>           
+        </div>       
     {%endblock%}
